@@ -1,0 +1,42 @@
+volumes:
+  db_data:
+
+networks:
+  local_network:
+    driver: bridge
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+    volumes:
+      - ${DKENV_PROJECT_PATH}:/var/www/html
+    networks:
+      - local_network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ${DKENV_PROJECT_PATH}:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      - local_network
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DKENV_DATABASE_NAME}
+      MYSQL_USER: ${DKENV_DATABASE_USER}
+      MYSQL_PASSWORD: ${DKENV_DATABASE_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - local_network
