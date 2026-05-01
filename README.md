@@ -1,6 +1,6 @@
-# dkenv-php
+# DKEnv PHP
 
-A Docker-based PHP development environment for local development on Windows, Linux, and macOS using Linux containers.
+A Docker-based PHP development environment for local development. DK stands for Docker Kit, or Donkey Kong, depending on who asks.
 
 ## Features
 
