@@ -10,6 +10,9 @@ services:
     build:
       context: .
       dockerfile: php/Dockerfile
+      args:
+        UID: ${DKENV_PHP_UID}
+        GID: ${DKENV_PHP_GID}
     volumes:
       - ${DKENV_PROJECT_PATH}:/var/www/html
     networks:
